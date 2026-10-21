@@ -54,6 +54,9 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .requestMatchers("/error").permitAll()
+                        // Health check público para que el servidor/monitor sepa si la app está viva
+                        // (solo responde {"status":"UP"}, sin detalles internos).
+                        .requestMatchers("/actuator/health").permitAll()
                         .requestMatchers("/api/usuarios/login", "/api/usuarios/registro",
                                 "/api/usuarios/refresh", "/api/usuarios/logout").permitAll()
                         .requestMatchers(
